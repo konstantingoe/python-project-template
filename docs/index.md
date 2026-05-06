@@ -33,6 +33,27 @@ See the [API Reference](reference.md) for detailed documentation.
 
 ---
 
+## Manuscript workflow (`paper/` and `notebooks/`)
+
+The template ships with a paired `paper/` and `notebooks/` layout for projects
+that publish alongside a manuscript:
+
+- `notebooks/` holds Jupyter notebooks (`figure_creator.ipynb`,
+  `table_creater.ipynb`) that produce results from the package code and write
+  them directly into `paper/figures/` (PNG/PDF) or `paper/tables/` (LaTeX
+  fragments).
+- `paper/` holds the LaTeX source. `main.tex` pulls in the generated artefacts
+  via `\includegraphics{figures/...}` and `\input{tables/...}`, so re-running
+  a notebook is the canonical way to refresh a result — the `.tex` skeleton
+  stays put.
+
+The shipped class file (`paper/uai2026.cls`) targets **UAI 2026** purely as an
+example. Replace it with whatever class your publishing outlet requires
+(NeurIPS, ICML, ACL, IEEEtran, Springer LNCS, …); the notebook → `paper/`
+artefact pipeline is venue-agnostic.
+
+---
+
 ## Developer Guide
 
 ### Pre-commit hooks

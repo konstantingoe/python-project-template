@@ -1,4 +1,4 @@
-# my_package: A Python project template
+# my_package: A Python project template for scientific paper writing
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -84,8 +84,8 @@ dependencies via `uv pip sync`, and installs the package in editable mode.
 from graph_models import UGRAPH  # replace with your package
 
 g = UGRAPH(nodes=["A", "B", "C"], edges=[("A", "B"), ("A", "C")])
-print(g.num_nodes)   # 3
-print(g.num_edges)   # 2
+print(g.num_nodes)  # 3
+print(g.num_edges)  # 2
 print(g.adjacency_matrix)
 ```
 
@@ -101,6 +101,16 @@ print(g.adjacency_matrix)
 ├── docs/
 │   ├── index.md
 │   └── reference.md
+├── notebooks/             # generate figures/tables for paper/
+│   ├── figure_creator.ipynb
+│   └── table_creater.ipynb
+├── paper/                 # LaTeX source — swap template for your venue
+│   ├── main.tex
+│   ├── uai2026.cls        # → replace with your venue's class file
+│   ├── library.bib        # BibTeX references
+│   ├── sections/          # \input'd by main.tex
+│   ├── figures/           # written by notebooks/
+│   └── tables/            # written by notebooks/
 ├── pyproject.toml         # build, deps, tool config
 ├── Makefile               # sync-venv, requirements, test, precommit
 ├── requirements.txt       # pinned runtime deps (auto-generated)
@@ -108,6 +118,20 @@ print(g.adjacency_matrix)
 ├── mkdocs.yml
 └── .pre-commit-config.yaml
 ```
+
+### `paper/` and `notebooks/`
+
+The `paper/` folder holds the LaTeX source for an accompanying manuscript, and
+`notebooks/` holds the Jupyter notebooks that produce its figures and tables —
+each notebook writes its output directly into `paper/figures/` or
+`paper/tables/`, which are then pulled into the document via
+`\includegraphics` and `\input`. Re-running a notebook is the canonical way to
+refresh a result; the `.tex` skeleton stays put.
+
+The shipped template targets **UAI 2026** (`paper/uai2026.cls`) purely as an
+example. Replace it with whatever class file your publishing outlet requires
+(NeurIPS, ICML, ACL, IEEEtran, Springer LNCS, …) — the figure/table workflow
+in `notebooks/` is venue-agnostic and stays the same.
 
 ## Testing
 
