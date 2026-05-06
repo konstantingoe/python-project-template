@@ -3,10 +3,38 @@
 *.log
 *.toc
 *.synctex.gz
+*.synctex(busy)
 *.out
 *.fls
 *.fdb_latexmk
-*.synctex(busy)
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+*.lof
+*.lot
+*.nav
+*.snm
+*.vrb
+*.idx
+*.ilg
+*.ind
+*.acn
+*.acr
+*.alg
+*.glg
+*.glo
+*.gls
+*.ist
+*.xdv
+*.figlist
+*.makefile
+*.dpth
+*.auxlock
+*-blx.bib
+
+# Built manuscript PDF — only at paper/ root, so paper/figures/*.pdf etc. stay tracked
+paper/*.pdf
 
 # Temporary files created by editors
 *~
