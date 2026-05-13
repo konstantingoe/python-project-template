@@ -38,6 +38,7 @@ Complete these steps before writing any code.
 - [Project Structure](#project-structure)
 - [Testing](#testing)
 - [Development](#development)
+- [Recommended VS Code Extensions](#recommended-vs-code-extensions)
 - [License](#license)
 
 ## Overview
@@ -52,7 +53,7 @@ This repository ships a ready-to-use Python project skeleton with:
 - **mypy** for static type checking (strict mode)
 - **pytest + pytest-cov** for testing with coverage
 - **pre-commit** hooks (ruff, mypy, bandit security scan, uv-based pip-compile on push)
-- **MkDocs + Material** for documentation with versioning via `mike`
+- **MkDocs + Material** for documentation, auto-deployed to GitHub Pages via GitHub Actions
 
 The example package (`graph_models`) provides an undirected-graph data structure
 (`UGRAPH`) to illustrate the intended layout.  Replace it with your own code.
@@ -179,14 +180,13 @@ mkdocs build   # static site in site/
 
 ### Deploying docs to GitHub Pages
 
-Versioned docs are published via [mike](https://github.com/jimporter/mike) to the `gh-pages` branch:
+The `.github/workflows/docs.yml` workflow builds the site with
+`mkdocs build --strict` and publishes it to GitHub Pages on every push to
+`main` (and on manual `workflow_dispatch`). No local steps are needed.
 
-```bash
-mike deploy --push --update-aliases 0.1.0 latest   # publish a version
-mike set-default --push latest                      # set the default (once)
-```
-
-> Enable GitHub Pages in your repo settings (Settings → Pages → Source: `gh-pages` branch) before deploying.
+> One-time setup: in the repo, go to **Settings → Pages** and set
+> **Source: GitHub Actions**. The first push to `main` after that will
+> deploy the site.
 
 ### Linting and type checking
 
@@ -194,6 +194,72 @@ mike set-default --push latest                      # set the default (once)
 ruff check graph_models/     # linting
 mypy graph_models/           # static type checking
 ```
+
+## Recommended VS Code Extensions
+
+The `.vscode/settings.json` shipped with this template is wired up for Ruff
+formatting, Pylance type checking, and Jupyter notebooks. To get the full
+experience, install the extensions below.
+
+### Python core
+
+| Extension | ID | Purpose |
+| --- | --- | --- |
+| Python | `ms-python.python` | Language support, interpreter selection, debugging |
+| Pylance | `ms-python.vscode-pylance` | Fast type checker / language server (required by `python.analysis.*` settings) |
+| Python Debugger | `ms-python.debugpy` | `debugpy`-based debugging |
+| Mypy Type Checker | `ms-python.mypy-type-checker` | Inline `mypy` diagnostics (matches the `mypy --strict` config in `pyproject.toml`) |
+| Python Environments | `ms-python.vscode-python-envs` | Manage the `venv_*` virtualenv created by `make sync-venv` |
+| Ruff | `charliermarsh.ruff` | Lint + format on save (set as `defaultFormatter` for `[python]` and notebooks) |
+| autoDocstring | `njpwerner.autodocstring` | Generate Google-style docstrings (matches the Ruff `pydocstyle` convention) |
+| Python Type Hint | `njqdev.vscode-python-typehint` | Autocomplete for type annotations |
+
+### Jupyter (for `notebooks/`)
+
+| Extension | ID |
+| --- | --- |
+| Jupyter | `ms-toolsai.jupyter` |
+| Jupyter Keymap | `ms-toolsai.jupyter-keymap` |
+| Jupyter Notebook Renderers | `ms-toolsai.jupyter-renderers` |
+| Jupyter Cell Tags | `ms-toolsai.vscode-jupyter-cell-tags` |
+| Jupyter Slide Show | `ms-toolsai.vscode-jupyter-slideshow` |
+
+### LaTeX (for `paper/`)
+
+| Extension | ID | Purpose |
+| --- | --- | --- |
+| LaTeX Workshop | `james-yu.latex-workshop` | Build, preview, and SyncTeX |
+| LaTeX Utilities | `tecosaur.latex-utilities` | Companion to LaTeX Workshop |
+| LaTeX Snippets | `jeffersonqin.latex-snippets-jeff` | Math / environment snippets |
+| LaTeX Support | `torn4dom4n.latex-support` | Extra syntax helpers |
+| Unicode Latex | `oijaz.unicode-latex` | Type Unicode via LaTeX commands |
+| LTeX | `valentjn.vscode-ltex` | Grammar / spell check for `.tex` and Markdown |
+
+### Config files & tooling
+
+| Extension | ID | Purpose |
+| --- | --- | --- |
+| Even Better TOML | `tamasfe.even-better-toml` | `pyproject.toml` editing |
+| YAML | `redhat.vscode-yaml` | `mkdocs.yml`, `.pre-commit-config.yaml`, GitHub Actions |
+| Markdown All in One | `yzhang.markdown-all-in-one` | Authoring `docs/` and this README |
+| markdownlint | `davidanson.vscode-markdownlint` | Markdown linting |
+| Makefile Tools | `ms-vscode.makefile-tools` | Run targets from the `Makefile` |
+| Rainbow CSV | `mechatroner.rainbow-csv` | Inspect tabular data |
+| Dependi | `fill-labs.dependi` | Surface outdated versions in `requirements*.txt` |
+| GitHub Actions | `github.vscode-github-actions` | Workflow editing and run status |
+| GitHub Pull Requests | `github.vscode-pull-request-github` | Review PRs in-editor |
+
+### Quality-of-life
+
+| Extension | ID |
+| --- | --- |
+| GitLens | `eamodio.gitlens` |
+| Error Lens | `usernamehw.errorlens` |
+| indent-rainbow | `oderwat.indent-rainbow` |
+| Trailing Spaces | `shardulm94.trailing-spaces` |
+
+> Tip: add the IDs above to `.vscode/extensions.json` under `"recommendations"`
+> so VS Code prompts new contributors to install them on first open.
 
 ## License
 
