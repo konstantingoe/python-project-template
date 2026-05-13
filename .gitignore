@@ -65,8 +65,6 @@ Thumbs.db
 # Logs
 *.log
 
-# VS Code
-.vscode/
 
 # Package build artefacts
 *.egg-info/
